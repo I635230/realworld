@@ -1,0 +1,13 @@
+version: "3"
+services:
+  front:
+    build:
+      context: .
+    tty: true
+    volumes:
+      - ./src:/front
+    ports:
+      - "3020:3020"
+    environment:
+      - WATCHPACK_POLLING=true
+    command: sh -c "PORT=3020 npm run dev"
