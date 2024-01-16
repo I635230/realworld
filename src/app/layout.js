@@ -8,9 +8,8 @@ import Footer from "@/app/ui/footer";
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <head>
-        <meta charset="utf-8" />
         <title>Conduit</title>
         <link
           href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"

@@ -11,3 +11,9 @@ services:
     environment:
       - WATCHPACK_POLLING=true
     command: sh -c "PORT=3020 npm run dev"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    external: true
