@@ -1,8 +1,9 @@
 import { fetchArticle } from "@/app/lib/data";
 
 export default async function Page() {
-  const slug = "How-to-train-dragons"; // 本当は、このページにpropsとしてslugを渡してあげる必要があるが、Article一覧ページがまだないので、仮で置いておく。
-  const article = await fetchArticle({ slug: slug });
+  const slug = "How-to-train-dragons"; // TODO: URLからslugを取得したい。
+  const articleData = await fetchArticle({ slug: slug });
+  const article = articleData.article;
   return (
     <>
       <div className="article-page">
