@@ -1,4 +1,5 @@
 import Header from "@/app/ui/header";
+// import HeaderWithLogin from "@/app/ui/header-with-login";
 import Footer from "@/app/ui/footer";
 
 // export const metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <Header />
+        {/* <HeaderWithLogin /> */}
         {children}
         <Footer />
       </body>
