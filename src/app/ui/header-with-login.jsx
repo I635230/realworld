@@ -1,3 +1,7 @@
+"use client";
+
+import { unauthenticate } from "@/app/lib/auth";
+
 export default function HeaderWithLogin() {
   return (
     <>
@@ -29,7 +33,7 @@ export default function HeaderWithLogin() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/logout">
+              <a className="nav-link" onClick={() => unauthenticate()}>
                 Sign out
               </a>
             </li>
