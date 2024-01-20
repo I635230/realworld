@@ -1,7 +1,7 @@
 import { fetchArticles } from "@/app/lib/data";
 
 export default async function Page() {
-  const articlesData = await fetchArticles();
+  const articlesData = await fetchArticles({});
   const articles = articlesData.articles;
   const articlesCount = articlesData.articlesCount;
   return (
@@ -30,11 +30,14 @@ export default async function Page() {
               {articles.map((article) => (
                 <div className="article-preview">
                   <div className="article-meta">
-                    <a href="/profile/eric-simons">
+                    <a href={`/profile/${article.author.username}`}>
                       <img src="http://i.imgur.com/Qr71crq.jpg" />
                     </a>
                     <div className="info">
-                      <a href="/profile/eric-simons" className="author">
+                      <a
+                        href={`/profile/${article.author.username}`}
+                        className="author"
+                      >
                         {article.author.username}
                       </a>
                       <span className="date">January 20th</span>
