@@ -1,8 +1,8 @@
-"use client";
+import { getCurrentUser } from "@/app/lib/data";
+import Logout from "@/app/ui/auth/logout";
 
-import { unauthenticate } from "@/app/lib/auth";
-
-export default function HeaderWithLogin() {
+export default async function HeaderWithLogin() {
+  const currentUser = await getCurrentUser();
   return (
     <>
       <nav className="navbar navbar-light">
@@ -28,15 +28,14 @@ export default function HeaderWithLogin() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                User Name
+              <a
+                className="nav-link"
+                href={`/profile/${currentUser.user.username}`}
+              >
+                {currentUser.user.username}
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" onClick={() => unauthenticate()}>
-                Sign out
-              </a>
-            </li>
+            <Logout />
           </ul>
         </div>
       </nav>
