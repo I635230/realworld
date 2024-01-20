@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 export async function fetchArticle({ slug }) {
   // console.log(slug);
   try {
@@ -54,12 +56,12 @@ export async function getCurrentUser() {
     const response = await fetch(`http://api:3000/api/user`, {
       method: "GET",
       headers: {
-        Authorization: process.env.USER_TOKEN,
+        Authorization: `Bearer ${cookies().get("session").value}`,
       },
     });
     // console.log(response);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);
