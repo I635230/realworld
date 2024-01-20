@@ -28,3 +28,21 @@ export async function fetchArticles() {
     console.log("Article取得エラー");
   }
 }
+
+export async function getCurrentUser() {
+  try {
+    const response = await fetch(`http://api:3000/api/user`, {
+      method: "GET",
+      headers: {
+        Authorization: process.env.USER_TOKEN,
+      },
+    });
+    // console.log(response);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    console.log("CurrentUser取得エラー");
+  }
+}
