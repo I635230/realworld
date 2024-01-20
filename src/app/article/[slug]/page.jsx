@@ -1,7 +1,7 @@
 import { fetchArticle } from "@/app/lib/data";
 
-export default async function Page() {
-  const slug = "How-to-train-dragons"; // TODO: URLからslugを取得したい。
+export default async function Page({ params }) {
+  const slug = params.slug;
   const articleData = await fetchArticle({ slug: slug });
   const article = articleData.article;
   return (
