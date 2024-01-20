@@ -29,3 +29,19 @@ export async function authenticate(state, formData) {
     console.log("ログインエラー");
   }
 }
+
+export async function authenticated() {
+  try {
+    return cookies().get("session").value;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function unauthenticate() {
+  try {
+    cookies().delete("session");
+  } catch (error) {
+    console.log("ログアウトエラー");
+  }
+}
