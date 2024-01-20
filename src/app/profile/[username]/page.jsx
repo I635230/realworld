@@ -1,7 +1,9 @@
 import { fetchArticles } from "@/app/lib/data";
 
-export default async function Page() {
-  const articlesData = await fetchArticles();
+export default async function Page({ params }) {
+  const articlesData = await fetchArticles({
+    author: params.username,
+  });
   const articles = articlesData.articles;
   return (
     <>
@@ -14,7 +16,7 @@ export default async function Page() {
                   src="http://i.imgur.com/Qr71crq.jpg"
                   className="user-img"
                 />
-                <h4>Eric Simons</h4>
+                <h4>{params.username}</h4>
                 <p>
                   Cofounder @GoThinkster, lived in Aol's HQ for a few months,
                   kinda looks like Peeta from the Hunger Games
@@ -53,11 +55,14 @@ export default async function Page() {
               {articles.map((article) => (
                 <div className="article-preview">
                   <div className="article-meta">
-                    <a href="/profile/eric-simons">
+                    <a href={`/profile/${article.author.username}`}>
                       <img src="http://i.imgur.com/Qr71crq.jpg" />
                     </a>
                     <div className="info">
-                      <a href="/profile/eric-simons" className="author">
+                      <a
+                        href={`/profile/${article.author.username}`}
+                        className="author"
+                      >
                         {article.author.username}
                       </a>
                       <span className="date">January 20th</span>
