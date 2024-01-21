@@ -5,6 +5,7 @@ export async function fetchArticle({ slug }) {
   try {
     const response = await fetch(`http://api:3000/api/articles/${slug}`, {
       method: "GET",
+      cache: "no-store",
     });
     // console.log(response);
     const data = await response.json();
@@ -40,6 +41,7 @@ export async function fetchArticles({
   try {
     const response = await fetch(url, {
       method: "GET",
+      cache: "no-store",
     });
     // console.log(response);
     const data = await response.json();
@@ -55,6 +57,7 @@ export async function getCurrentUser() {
   try {
     const response = await fetch(`http://api:3000/api/user`, {
       method: "GET",
+      cache: "no-store",
       headers: {
         Authorization: `Bearer ${cookies().get("session").value}`,
       },
