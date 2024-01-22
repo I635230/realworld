@@ -1,3 +1,4 @@
+import "@/app/global.css";
 import Header from "@/app/ui/header";
 import HeaderWithLogin from "@/app/ui/header-with-login";
 import Footer from "@/app/ui/footer";
