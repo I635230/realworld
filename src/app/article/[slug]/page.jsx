@@ -1,4 +1,5 @@
 import { fetchArticle } from "@/app/lib/data";
+import DeleteArticle from "@/app/ui/article/delete-article";
 
 export default async function Page({ params }) {
   const slug = params.slug;
@@ -21,12 +22,10 @@ export default async function Page({ params }) {
                 </a>
                 <span className="date">January 20th</span>
               </div>
-              <a
-                href={`/editor/${slug}`}
-                class="btn btn-sm btn-outline-secondary"
-              >
+              <a class="btn btn-sm btn-outline-secondary">
                 <i class="ion-edit"></i> Edit Article
               </a>
+              <DeleteArticle slug={slug} />
             </div>
           </div>
         </div>

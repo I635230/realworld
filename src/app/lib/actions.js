@@ -53,3 +53,17 @@ export async function updateArticle(tags, slug, state, formData) {
     // return error;
   }
 }
+
+export async function deleteArticle(slug) {
+  try {
+    const response = await fetch(`http://api:3000/api/articles/${slug}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${cookies().get("session").value}`,
+      },
+    });
+    console.log("記事の削除に成功しました");
+  } catch (error) {
+    console.log("記事の削除に失敗しました");
+  }
+}
