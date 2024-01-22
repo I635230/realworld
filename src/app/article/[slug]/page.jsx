@@ -22,7 +22,10 @@ export default async function Page({ params }) {
                 </a>
                 <span className="date">January 20th</span>
               </div>
-              <a class="btn btn-sm btn-outline-secondary">
+              <a
+                href={`/editor/${slug}`}
+                class="btn btn-sm btn-outline-secondary"
+              >
                 <i class="ion-edit"></i> Edit Article
               </a>
               <DeleteArticle slug={slug} />
