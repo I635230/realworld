@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 
 export async function createArticle(tags, state, formData) {
   // console.log(tags);
@@ -66,4 +67,23 @@ export async function deleteArticle(slug) {
   } catch (error) {
     console.log("記事の削除に失敗しました");
   }
+}
+
+export async function favorite(slug, pathname) {
+  try {
+    const response = await fetch(
+      `http://api:3000/api/articles/${slug}/favorite`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${cookies().get("session").value}`,
+        },
+      }
+    );
+    console.log("お気に入り登録に成功しました");
+  } catch (error) {
+    console.log("お気に入り登録に失敗しました");
+  }
+
+  revalidatePath(pathname); // revalidatePathを指定することで、次にそのパスにアクセスしたときに再読み込みを行う
 }
