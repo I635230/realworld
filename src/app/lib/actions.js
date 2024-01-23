@@ -87,3 +87,22 @@ export async function favorite(slug, pathname) {
 
   revalidatePath(pathname); // revalidatePathを指定することで、次にそのパスにアクセスしたときに再読み込みを行う
 }
+
+export async function unfavorite(slug, pathname) {
+  try {
+    const response = await fetch(
+      `http://api:3000/api/articles/${slug}/favorite`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${cookies().get("session").value}`,
+        },
+      }
+    );
+    console.log("お気に入り解除に成功しました");
+  } catch (error) {
+    console.log("お気に入り解除に失敗しました");
+  }
+
+  revalidatePath(pathname); // revalidatePathを指定することで、次にそのパスにアクセスしたときに再読み込みを行う
+}
