@@ -1,5 +1,6 @@
 import { fetchArticles } from "@/app/lib/data";
 import Favorite from "@/app/ui/favorite/favorite";
+import Link from "next/link";
 
 export default async function Page() {
   const articlesData = await fetchArticles({});
@@ -21,9 +22,9 @@ export default async function Page() {
               <div className="feed-toggle">
                 <ul className="nav nav-pills outline-active">
                   <li className="nav-item">
-                    <a className="nav-link active" href="">
+                    <Link className="nav-link active" href="">
                       Global Feed
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -31,21 +32,24 @@ export default async function Page() {
               {articles.map((article) => (
                 <div className="article-preview">
                   <div className="article-meta">
-                    <a href={`/profile/${article.author.username}`}>
+                    <Link href={`/profile/${article.author.username}`}>
                       <img src="http://i.imgur.com/Qr71crq.jpg" />
-                    </a>
+                    </Link>
                     <div className="info">
-                      <a
+                      <Link
                         href={`/profile/${article.author.username}`}
                         className="author"
                       >
                         {article.author.username}
-                      </a>
+                      </Link>
                       <span className="date">January 20th</span>
                     </div>
                     <Favorite article={article} />
                   </div>
-                  <a href={`/article/${article.slug}`} className="preview-link">
+                  <Link
+                    href={`/article/${article.slug}`}
+                    className="preview-link"
+                  >
                     <h1>{article.title}</h1>
                     <p>{article.description}</p>
                     <span>Read more...</span>
@@ -56,20 +60,20 @@ export default async function Page() {
                         </li>
                       ))}
                     </ul>
-                  </a>
+                  </Link>
                 </div>
               ))}
 
               <ul className="pagination">
                 <li className="page-item active">
-                  <a className="page-link" href="">
+                  <Link className="page-link" href="">
                     1
-                  </a>
+                  </Link>
                 </li>
                 <li className="page-item">
-                  <a className="page-link" href="">
+                  <Link className="page-link" href="">
                     2
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

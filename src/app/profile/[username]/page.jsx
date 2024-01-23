@@ -1,5 +1,6 @@
 import { fetchArticles } from "@/app/lib/data";
 import Favorite from "@/app/ui/favorite/favorite";
+import Link from "next/link";
 
 export default async function Page({ params }) {
   const articlesData = await fetchArticles({
@@ -18,18 +19,15 @@ export default async function Page({ params }) {
                   className="user-img"
                 />
                 <h4>{params.username}</h4>
-                <p>
-                  Cofounder @GoThinkster, lived in Aol's HQ for a few months,
-                  kinda looks like Peeta from the Hunger Games
-                </p>
-                <button className="btn btn-sm btn-outline-secondary action-btn">
+                <p>bio</p>
+                {/* <button className="btn btn-sm btn-outline-secondary action-btn">
                   <i className="ion-plus-round"></i>
                   &nbsp; Follow Eric Simons
                 </button>
                 <button className="btn btn-sm btn-outline-secondary action-btn">
                   <i className="ion-gear-a"></i>
                   &nbsp; Edit Profile Settings
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
@@ -41,14 +39,14 @@ export default async function Page({ params }) {
               <div className="articles-toggle">
                 <ul className="nav nav-pills outline-active">
                   <li className="nav-item">
-                    <a className="nav-link active" href="">
+                    <Link className="nav-link active" href="">
                       My Articles
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="">
+                    <Link className="nav-link" href="">
                       Favorited Articles
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -56,21 +54,24 @@ export default async function Page({ params }) {
               {articles.map((article) => (
                 <div className="article-preview">
                   <div className="article-meta">
-                    <a href={`/profile/${article.author.username}`}>
+                    <Link href={`/profile/${article.author.username}`}>
                       <img src="http://i.imgur.com/Qr71crq.jpg" />
-                    </a>
+                    </Link>
                     <div className="info">
-                      <a
+                      <Link
                         href={`/profile/${article.author.username}`}
                         className="author"
                       >
                         {article.author.username}
-                      </a>
+                      </Link>
                       <span className="date">January 20th</span>
                     </div>
                     <Favorite article={article} />
                   </div>
-                  <a href={`/article/${article.slug}`} className="preview-link">
+                  <Link
+                    href={`/article/${article.slug}`}
+                    className="preview-link"
+                  >
                     <h1>{article.title}</h1>
                     <p>{article.description}</p>
                     <span>Read more...</span>
@@ -81,20 +82,20 @@ export default async function Page({ params }) {
                         </li>
                       ))}
                     </ul>
-                  </a>
+                  </Link>
                 </div>
               ))}
 
               <ul className="pagination">
                 <li className="page-item active">
-                  <a className="page-link" href="">
+                  <Link className="page-link" href="">
                     1
-                  </a>
+                  </Link>
                 </li>
                 <li className="page-item">
-                  <a className="page-link" href="">
+                  <Link className="page-link" href="">
                     2
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
