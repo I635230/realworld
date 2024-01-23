@@ -23,6 +23,12 @@ export async function authenticate(state, formData) {
       maxAge: 60 * 60 * 24 * 7, // One week
       path: "/",
     });
+    const username = data.user.username;
+    cookies().set("username", username, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 7, // One week
+      path: "/",
+    });
     return data;
   } catch (error) {
     console.log(error);
@@ -41,6 +47,7 @@ export async function authenticated() {
 export async function unauthenticate() {
   try {
     cookies().delete("session");
+    cookies().delete("username");
   } catch (error) {
     console.log("ログアウトエラー");
   }

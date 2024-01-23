@@ -1,10 +1,12 @@
 import { fetchArticle } from "@/app/lib/data";
 import DeleteArticle from "@/app/ui/article/delete-article";
+import { cookies } from "next/headers";
 
 export default async function Page({ params }) {
   const slug = params.slug;
   const articleData = await fetchArticle({ slug: slug });
   const article = articleData.article;
+  const user = cookies().get("username");
   return (
     <>
       <div className="article-page">
@@ -22,13 +24,17 @@ export default async function Page({ params }) {
                 </a>
                 <span className="date">January 20th</span>
               </div>
-              <a
-                href={`/editor/${slug}`}
-                class="btn btn-sm btn-outline-secondary"
-              >
-                <i class="ion-edit"></i> Edit Article
-              </a>
-              <DeleteArticle slug={slug} />
+              {user && user.value == article.author.username && (
+                <>
+                  <a
+                    href={`/editor/${slug}`}
+                    class="btn btn-sm btn-outline-secondary"
+                  >
+                    <i class="ion-edit"></i> Edit Article
+                  </a>
+                  <DeleteArticle slug={slug} />
+                </>
+              )}
             </div>
           </div>
         </div>
