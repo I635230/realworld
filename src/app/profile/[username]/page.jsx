@@ -1,4 +1,5 @@
 import { fetchArticles } from "@/app/lib/data";
+import Favorite from "@/app/ui/favorite/favorite";
 
 export default async function Page({ params }) {
   const articlesData = await fetchArticles({
@@ -67,9 +68,7 @@ export default async function Page({ params }) {
                       </a>
                       <span className="date">January 20th</span>
                     </div>
-                    <button className="btn btn-outline-primary btn-sm pull-xs-right">
-                      <i className="ion-heart"></i> {article.favoritesCount}
-                    </button>
+                    <Favorite article={article} />
                   </div>
                   <a href={`/article/${article.slug}`} className="preview-link">
                     <h1>{article.title}</h1>

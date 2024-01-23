@@ -40,10 +40,18 @@ export async function fetchArticles({
     url = `http://api:3000/api/articles?limit=${limit}&offset=${offset}`;
   }
 
+  let session;
+  if (cookies().get("session")) {
+    session = cookies().get("session").value;
+  }
+
   try {
     const response = await fetch(url, {
       method: "GET",
       cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${session}`,
+      },
     });
     // console.log(response);
     const data = await response.json();
