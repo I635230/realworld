@@ -1,6 +1,7 @@
 import { fetchArticle } from "@/app/lib/data";
 import DeleteArticle from "@/app/ui/article/delete-article";
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 export default async function Page({ params }) {
   const slug = params.slug;
@@ -15,23 +16,23 @@ export default async function Page({ params }) {
             <h1>{article.title}</h1>
 
             <div className="article-meta">
-              <a href="/profile/eric-simons">
+              <Link href="/profile/eric-simons">
                 <img src="http://i.imgur.com/Qr71crq.jpg" />
-              </a>
+              </Link>
               <div className="info">
-                <a href="/profile/eric-simons" className="author">
+                <Link href="/profile/eric-simons" className="author">
                   {article.author.username}
-                </a>
+                </Link>
                 <span className="date">January 20th</span>
               </div>
               {user && user.value == article.author.username && (
                 <>
-                  <a
+                  <Link
                     href={`/editor/${slug}`}
                     class="btn btn-sm btn-outline-secondary"
                   >
                     <i class="ion-edit"></i> Edit Article
-                  </a>
+                  </Link>
                   <DeleteArticle slug={slug} />
                 </>
               )}

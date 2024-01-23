@@ -1,26 +1,28 @@
+import Link from "next/link";
+
 export default function Header() {
   return (
     <>
       <nav className="navbar navbar-light">
         <div className="container">
-          <a className="navbar-brand" href="/">
+          <Link className="navbar-brand" href="/">
             conduit
-          </a>
+          </Link>
           <ul className="nav navbar-nav pull-xs-right">
             <li className="nav-item">
-              <a className="nav-link active" href="/">
+              <Link className="nav-link active" href="/">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/login">
+              <Link className="nav-link" href="/login">
                 Sign in
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/register">
+              <Link className="nav-link" href="/register">
                 Sign up
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
