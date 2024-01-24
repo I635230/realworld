@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createArticle(tags, slug, state, formData) {
   try {
@@ -24,6 +25,8 @@ export async function createArticle(tags, slug, state, formData) {
   } catch (error) {
     console.log("記事の作成に失敗しました");
   }
+
+  redirect("/");
 }
 
 export async function updateArticle(tags, slug, state, formData) {
@@ -48,6 +51,8 @@ export async function updateArticle(tags, slug, state, formData) {
   } catch (error) {
     console.log("記事の更新に失敗しました");
   }
+
+  redirect(`/`);
 }
 
 export async function deleteArticle(slug) {
@@ -80,7 +85,7 @@ export async function favorite(slug, pathname) {
     console.log("お気に入り登録に失敗しました");
   }
 
-  revalidatePath(pathname); // revalidatePathを指定することで、次にそのパスにアクセスしたときに再読み込みを行う
+  // revalidatePath(pathname); // revalidatePathを指定することで、次にそのパスにアクセスしたときに再読み込みを行う
 }
 
 export async function unfavorite(slug, pathname) {
@@ -99,5 +104,5 @@ export async function unfavorite(slug, pathname) {
     console.log("お気に入り解除に失敗しました");
   }
 
-  revalidatePath(pathname); // revalidatePathを指定することで、次にそのパスにアクセスしたときに再読み込みを行う
+  // revalidatePath(pathname); // revalidatePathを指定することで、次にそのパスにアクセスしたときに再読み込みを行う
 }
