@@ -5,7 +5,10 @@ export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   console.log("middlewareが読み込まれました");
   const user = request.cookies.get("username");
-  console.log(user);
+
+  // headerに現在のpathを設定
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pathname", pathname);
 
   // redirect
   if (pathname === "/editor" && !user) {
@@ -16,10 +19,14 @@ export default function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(`/article/${slug}`, request.url));
   }
 
-  // マッチしなかったら、そのまま表示
-  return NextResponse.next();
+  // マッチしなかったら表示
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
-export const config = {
-  matcher: ["/editor", "/editor/:slug*"],
-};
+// export const config = {
+//   matcher: ["/editor", "/editor/:slug*"],
+// };
