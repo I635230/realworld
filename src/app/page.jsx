@@ -1,9 +1,10 @@
-import { fetchArticles } from "@/app/lib/data";
-import Link from "next/link";
-import Pagination from "@/app/ui/pagination";
 import { headers } from "next/headers";
+import { fetchArticles } from "@/app/lib/data";
 import { getMaxPage } from "@/app/lib/calculate";
-import Feed from "@/app/ui/article/feed";
+import Banner from "@/app/ui/top/banner";
+import FeedToggle from "@/app/ui/articles/feed/feed-toggle";
+import Feed from "@/app/ui/articles/feed/feed";
+import Pagination from "@/app/ui/articles/feed/pagination";
 
 export default async function Page({ searchParams }) {
   const pathname = headers().get("x-pathname") || "";
@@ -16,23 +17,13 @@ export default async function Page({ searchParams }) {
   return (
     <>
       <div className="home-page">
-        <div className="banner">
-          <div className="container">
-            <h1 className="logo-font">conduit</h1>
-            <p>A place to share your knowledge.</p>
-          </div>
-        </div>
-
+        <Banner />
         <div className="container page">
           <div className="row">
             <div className="col-md-9">
               <div className="feed-toggle">
                 <ul className="nav nav-pills outline-active">
-                  <li className="nav-item">
-                    <Link className="nav-link active" href="">
-                      Global Feed
-                    </Link>
-                  </li>
+                  <FeedToggle feedName={"Global Feed"} active={"active"} />
                 </ul>
               </div>
 

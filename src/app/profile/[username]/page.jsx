@@ -1,9 +1,9 @@
-import { fetchArticles } from "@/app/lib/data";
-import Link from "next/link";
-import Pagination from "@/app/ui/pagination";
 import { headers } from "next/headers";
+import { fetchArticles } from "@/app/lib/data";
 import { getMaxPage } from "@/app/lib/calculate";
-import Feed from "@/app/ui/article/feed";
+import FeedToggle from "@/app/ui/articles/feed/feed-toggle";
+import Feed from "@/app/ui/articles/feed/feed";
+import Pagination from "@/app/ui/articles/feed/pagination";
 
 export default async function Page({ params, searchParams }) {
   const pathname = headers().get("x-pathname") || "";
@@ -39,16 +39,8 @@ export default async function Page({ params, searchParams }) {
             <div className="col-xs-12 col-md-10 offset-md-1">
               <div className="articles-toggle">
                 <ul className="nav nav-pills outline-active">
-                  <li className="nav-item">
-                    <Link className="nav-link active" href="">
-                      My Articles
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" href="">
-                      Favorited Articles
-                    </Link>
-                  </li>
+                  <FeedToggle feedName={"My Articles"} active={"active"} />
+                  <FeedToggle feedName={"Favorited Articles"} />
                 </ul>
               </div>
 
