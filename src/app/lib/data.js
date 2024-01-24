@@ -3,19 +3,17 @@
 import { cookies } from "next/headers";
 
 export async function fetchArticle({ slug }) {
-  // console.log(slug);
   try {
     const response = await fetch(`http://api:3000/api/articles/${slug}`, {
       method: "GET",
       cache: "no-store",
     });
-    // console.log(response);
     const data = await response.json();
-    // console.log(data);
+    console.log("Article取得に成功しました");
     return data;
   } catch (error) {
     console.log(error);
-    console.log("Article取得エラー");
+    console.log("Article取得に失敗しました");
   }
 }
 
@@ -52,13 +50,12 @@ export async function fetchArticles({
         Authorization: `Bearer ${session}`,
       },
     });
-    // console.log(response);
     const data = await response.json();
-    // console.log(data);
+    console.log("Articles取得に成功しました");
     return data;
   } catch (error) {
     console.log(error);
-    console.log("Article取得エラー");
+    console.log("Articles取得に失敗しました");
   }
 }
 
@@ -71,12 +68,11 @@ export async function getCurrentUser() {
         Authorization: `Bearer ${cookies().get("session").value}`,
       },
     });
-    // console.log(response);
     const data = await response.json();
-    // console.log(data);
+    console.log("CurrentUser取得に成功しました");
     return data;
   } catch (error) {
     console.log(error);
-    console.log("CurrentUser取得エラー");
+    console.log("CurrentUser取得に失敗しました");
   }
 }

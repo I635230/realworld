@@ -4,9 +4,6 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
 export async function createArticle(tags, state, formData) {
-  // console.log(tags);
-  // console.log(formData);
-  // console.log(formData.get("title"));
   try {
     const response = await fetch(`http://api:3000/api/articles`, {
       method: "POST",
@@ -26,7 +23,6 @@ export async function createArticle(tags, state, formData) {
     console.log("記事の作成に成功しました");
   } catch (error) {
     console.log("記事の作成に失敗しました");
-    // return error;
   }
 }
 
@@ -51,7 +47,6 @@ export async function updateArticle(tags, slug, state, formData) {
     console.log("記事の更新に成功しました");
   } catch (error) {
     console.log("記事の更新に失敗しました");
-    // return error;
   }
 }
 
