@@ -3,7 +3,6 @@ import { NextResponse, NextRequest } from "next/server";
 // 引数をjsでどう書くかわからないので、このファイルだけtsになった
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  console.log("middlewareが読み込まれました");
   const user = request.cookies.get("username");
 
   // headerに現在のpathを設定

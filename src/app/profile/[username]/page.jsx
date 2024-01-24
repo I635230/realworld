@@ -1,20 +1,21 @@
-import { fetchArticles } from "@/app/lib/data";
-import Favorite from "@/app/ui/favorite/favorite";
-import Link from "next/link";
-import Pagination from "@/app/ui/pagination";
 import { headers } from "next/headers";
+import { fetchArticles } from "@/app/lib/data";
+import { getMaxPage } from "@/app/lib/calculate";
+import FeedToggle from "@/app/ui/articles/feed/feed-toggle";
+import Feed from "@/app/ui/articles/feed/feed";
+import Pagination from "@/app/ui/articles/feed/pagination";
 
 export default async function Page({ params, searchParams }) {
   const pathname = headers().get("x-pathname") || "";
   const page = searchParams["page"];
-  const limit = searchParams["limit"] || 20;
   const articlesData = await fetchArticles({
     author: params.username,
     page: page,
   });
-  const articles = articlesData.articles;
-  const articlesCount = articlesData.articlesCount;
-  const maxPage = Math.ceil(articlesCount / limit);
+  const maxPage = getMaxPage({
+    articlesCount: articlesData.articlesCount,
+    limit: searchParams["limit"],
+  });
   return (
     <>
       <div className="profile-page">
@@ -28,14 +29,6 @@ export default async function Page({ params, searchParams }) {
                 />
                 <h4>{params.username}</h4>
                 <p>bio</p>
-                {/* <button className="btn btn-sm btn-outline-secondary action-btn">
-                  <i className="ion-plus-round"></i>
-                  &nbsp; Follow Eric Simons
-                </button>
-                <button className="btn btn-sm btn-outline-secondary action-btn">
-                  <i className="ion-gear-a"></i>
-                  &nbsp; Edit Profile Settings
-                </button> */}
               </div>
             </div>
           </div>
@@ -46,53 +39,12 @@ export default async function Page({ params, searchParams }) {
             <div className="col-xs-12 col-md-10 offset-md-1">
               <div className="articles-toggle">
                 <ul className="nav nav-pills outline-active">
-                  <li className="nav-item">
-                    <Link className="nav-link active" href="">
-                      My Articles
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" href="">
-                      Favorited Articles
-                    </Link>
-                  </li>
+                  <FeedToggle feedName={"My Articles"} active={"active"} />
+                  <FeedToggle feedName={"Favorited Articles"} />
                 </ul>
               </div>
 
-              {articles.map((article) => (
-                <div className="article-preview">
-                  <div className="article-meta">
-                    <Link href={`/profile/${article.author.username}`}>
-                      <img src="http://i.imgur.com/Qr71crq.jpg" />
-                    </Link>
-                    <div className="info">
-                      <Link
-                        href={`/profile/${article.author.username}`}
-                        className="author"
-                      >
-                        {article.author.username}
-                      </Link>
-                      <span className="date">January 20th</span>
-                    </div>
-                    <Favorite article={article} />
-                  </div>
-                  <Link
-                    href={`/article/${article.slug}`}
-                    className="preview-link"
-                  >
-                    <h1>{article.title}</h1>
-                    <p>{article.description}</p>
-                    <span>Read more...</span>
-                    <ul className="tag-list">
-                      {article.tagList.map((tag) => (
-                        <li className="tag-default tag-pill tag-outline">
-                          {tag}
-                        </li>
-                      ))}
-                    </ul>
-                  </Link>
-                </div>
-              ))}
+              <Feed articles={articlesData.articles} />
 
               <Pagination pathname={pathname} page={page} maxPage={maxPage} />
             </div>
