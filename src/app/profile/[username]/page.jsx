@@ -1,9 +1,9 @@
 import { fetchArticles } from "@/app/lib/data";
-import Favorite from "@/app/ui/favorite/favorite";
 import Link from "next/link";
 import Pagination from "@/app/ui/pagination";
 import { headers } from "next/headers";
 import { getMaxPage } from "@/app/lib/calculate";
+import Feed from "@/app/ui/article/feed";
 
 export default async function Page({ params, searchParams }) {
   const pathname = headers().get("x-pathname") || "";
@@ -12,7 +12,6 @@ export default async function Page({ params, searchParams }) {
     author: params.username,
     page: page,
   });
-  const articles = articlesData.articles;
   const maxPage = getMaxPage({
     articlesCount: articlesData.articlesCount,
     limit: searchParams["limit"],
@@ -53,40 +52,7 @@ export default async function Page({ params, searchParams }) {
                 </ul>
               </div>
 
-              {articles.map((article) => (
-                <div className="article-preview">
-                  <div className="article-meta">
-                    <Link href={`/profile/${article.author.username}`}>
-                      <img src="http://i.imgur.com/Qr71crq.jpg" />
-                    </Link>
-                    <div className="info">
-                      <Link
-                        href={`/profile/${article.author.username}`}
-                        className="author"
-                      >
-                        {article.author.username}
-                      </Link>
-                      <span className="date">January 20th</span>
-                    </div>
-                    <Favorite article={article} />
-                  </div>
-                  <Link
-                    href={`/article/${article.slug}`}
-                    className="preview-link"
-                  >
-                    <h1>{article.title}</h1>
-                    <p>{article.description}</p>
-                    <span>Read more...</span>
-                    <ul className="tag-list">
-                      {article.tagList.map((tag) => (
-                        <li className="tag-default tag-pill tag-outline">
-                          {tag}
-                        </li>
-                      ))}
-                    </ul>
-                  </Link>
-                </div>
-              ))}
+              <Feed articles={articlesData.articles} />
 
               <Pagination pathname={pathname} page={page} maxPage={maxPage} />
             </div>
