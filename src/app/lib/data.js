@@ -25,19 +25,18 @@ export async function fetchArticles({
   favorited,
   limit = 20,
   offset = 0,
+  page = 1,
 }) {
-  console.log(author);
-
   let url;
 
   if (tag) {
-    url = `http://api:3000/api/articles?tag=${tag}&limit=${limit}&offset=${offset}`;
+    url = `http://api:3000/api/articles?tag=${tag}&limit=${limit}&offset=${offset}&page=${page}`;
   } else if (author) {
-    url = `http://api:3000/api/articles?author=${author}&limit=${limit}&offset=${offset}`;
+    url = `http://api:3000/api/articles?author=${author}&limit=${limit}&offset=${offset}&page=${page}`;
   } else if (favorited) {
-    url = `http://api:3000/api/articles?favorited=${favorited}&limit=${limit}&offset=${offset}`;
+    url = `http://api:3000/api/articles?favorited=${favorited}&limit=${limit}&offset=${offset}&page=${page}`;
   } else {
-    url = `http://api:3000/api/articles?limit=${limit}&offset=${offset}`;
+    url = `http://api:3000/api/articles?limit=${limit}&offset=${offset}&page=${page}`;
   }
 
   let session;
@@ -55,7 +54,7 @@ export async function fetchArticles({
     });
     // console.log(response);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);

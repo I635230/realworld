@@ -1,11 +1,17 @@
 import { fetchArticles } from "@/app/lib/data";
 import Favorite from "@/app/ui/favorite/favorite";
 import Link from "next/link";
+import Pagination from "@/app/ui/pagination";
+import { headers } from "next/headers";
 
-export default async function Page() {
-  const articlesData = await fetchArticles({});
+export default async function Page({ searchParams }) {
+  const pathname = headers().get("x-pathname") || "";
+  const page = searchParams["page"];
+  const limit = searchParams["limit"] || 20;
+  const articlesData = await fetchArticles({ page: page });
   const articles = articlesData.articles;
   const articlesCount = articlesData.articlesCount;
+  const maxPage = Math.ceil(articlesCount / limit);
   return (
     <>
       <div className="home-page">
@@ -64,18 +70,7 @@ export default async function Page() {
                 </div>
               ))}
 
-              <ul className="pagination">
-                <li className="page-item active">
-                  <Link className="page-link" href="">
-                    1
-                  </Link>
-                </li>
-                <li className="page-item">
-                  <Link className="page-link" href="">
-                    2
-                  </Link>
-                </li>
-              </ul>
+              <Pagination pathname={pathname} page={page} maxPage={maxPage} />
             </div>
           </div>
         </div>
