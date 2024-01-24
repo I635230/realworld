@@ -1,24 +1,33 @@
 "use client";
 
 import { favorite, unfavorite } from "@/app/lib/actions";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Favorite({ article }) {
-  const pathname = usePathname();
   let [favoritesCount, setFavoritesCount] = useState(article.favoritesCount);
   let [favorited, setFavorited] = useState(article.favorited);
+
+  async function applyFavorite(diff) {
+    setFavoritesCount(favoritesCount + diff);
+    setFavorited(!favorited);
+    let isOk;
+    if (diff == +1) {
+      isOk = await favorite(article.slug);
+    } else if (diff == -1) {
+      isOk = await unfavorite(article.slug);
+    }
+    if (!isOk) {
+      setFavoritesCount(favoritesCount);
+      setFavorited(favorited);
+    }
+  }
 
   if (favorited) {
     return (
       <>
         <button
           className="btn btn-outline-primary-hover btn-sm pull-xs-right"
-          onClick={() => {
-            setFavoritesCount(favoritesCount - 1);
-            setFavorited(false);
-            unfavorite(article.slug, pathname);
-          }}
+          onClick={() => applyFavorite(-1)}
         >
           <i className="ion-heart"></i> {favoritesCount}
         </button>
@@ -29,11 +38,7 @@ export default function Favorite({ article }) {
       <>
         <button
           className="btn btn-outline-primary btn-sm pull-xs-right"
-          onClick={() => {
-            setFavoritesCount(favoritesCount + 1);
-            setFavorited(true);
-            favorite(article.slug, pathname);
-          }}
+          onClick={() => applyFavorite(+1)}
         >
           <i className="ion-heart"></i> {favoritesCount}
         </button>
