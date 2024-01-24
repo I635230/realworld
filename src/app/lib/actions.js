@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createArticle(tags, slug, state, formData) {
   try {
@@ -24,6 +24,8 @@ export async function createArticle(tags, slug, state, formData) {
   } catch (error) {
     console.log("記事の作成に失敗しました");
   }
+
+  redirect("/");
 }
 
 export async function updateArticle(tags, slug, state, formData) {
@@ -48,6 +50,8 @@ export async function updateArticle(tags, slug, state, formData) {
   } catch (error) {
     console.log("記事の更新に失敗しました");
   }
+
+  redirect(`/`);
 }
 
 export async function deleteArticle(slug) {
@@ -64,7 +68,7 @@ export async function deleteArticle(slug) {
   }
 }
 
-export async function favorite(slug, pathname) {
+export async function favorite(slug) {
   try {
     const response = await fetch(
       `http://api:3000/api/articles/${slug}/favorite`,
@@ -76,14 +80,14 @@ export async function favorite(slug, pathname) {
       }
     );
     console.log("お気に入り登録に成功しました");
+    return true;
   } catch (error) {
     console.log("お気に入り登録に失敗しました");
+    return false;
   }
-
-  revalidatePath(pathname); // revalidatePathを指定することで、次にそのパスにアクセスしたときに再読み込みを行う
 }
 
-export async function unfavorite(slug, pathname) {
+export async function unfavorite(slug) {
   try {
     const response = await fetch(
       `http://api:3000/api/articles/${slug}/favorite`,
@@ -95,9 +99,9 @@ export async function unfavorite(slug, pathname) {
       }
     );
     console.log("お気に入り解除に成功しました");
+    return true;
   } catch (error) {
     console.log("お気に入り解除に失敗しました");
+    return false;
   }
-
-  revalidatePath(pathname); // revalidatePathを指定することで、次にそのパスにアクセスしたときに再読み込みを行う
 }

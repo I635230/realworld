@@ -3,6 +3,7 @@ import { NextResponse, NextRequest } from "next/server";
 // 引数をjsでどう書くかわからないので、このファイルだけtsになった
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  console.log(`${pathname}でmiddlewareを読み込み中`);
   const user = request.cookies.get("username");
 
   // headerに現在のpathを設定
@@ -26,6 +27,15 @@ export default function middleware(request: NextRequest) {
   });
 }
 
-// export const config = {
-//   matcher: ["/editor", "/editor/:slug*"],
-// };
+export const config = {
+  /*
+   * Match all request paths except for the ones starting with:
+   * - api (API routes)
+   * - _next/static (static files)
+   * - _next/image
+   * - assets
+   * - favicon.ico (favicon file)
+   * - sw.js (Service Worker file)
+   */
+  matcher: ["/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)"],
+};
