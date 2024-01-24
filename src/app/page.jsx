@@ -3,15 +3,17 @@ import Favorite from "@/app/ui/favorite/favorite";
 import Link from "next/link";
 import Pagination from "@/app/ui/pagination";
 import { headers } from "next/headers";
+import { getMaxPage } from "@/app/lib/calculate";
 
 export default async function Page({ searchParams }) {
   const pathname = headers().get("x-pathname") || "";
   const page = searchParams["page"];
-  const limit = searchParams["limit"] || 20;
   const articlesData = await fetchArticles({ page: page });
   const articles = articlesData.articles;
-  const articlesCount = articlesData.articlesCount;
-  const maxPage = Math.ceil(articlesCount / limit);
+  const maxPage = getMaxPage({
+    articlesCount: articlesData.articlesCount,
+    limit: searchParams["limit"],
+  });
   return (
     <>
       <div className="home-page">
