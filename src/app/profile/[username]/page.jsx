@@ -1,21 +1,12 @@
-import { headers } from "next/headers";
-import { fetchArticles } from "@/app/lib/data";
-import { getMaxPage } from "@/app/lib/calculate";
+import { Suspense } from "react";
 import FeedToggle from "@/app/ui/articles/feed/feed-toggle";
 import Feed from "@/app/ui/articles/feed/feed";
-import Pagination from "@/app/ui/articles/feed/pagination";
+import Loading from "@/app/ui/articles/feed/loading";
 
 export default async function Page({ params, searchParams }) {
-  const pathname = headers().get("x-pathname") || "";
   const page = searchParams["page"];
-  const articlesData = await fetchArticles({
-    author: params.username,
-    page: page,
-  });
-  const maxPage = getMaxPage({
-    articlesCount: articlesData.articlesCount,
-    limit: searchParams["limit"],
-  });
+  const limit = searchParams["limit"];
+  const offset = searchParams["offset"];
   return (
     <>
       <div className="profile-page">
@@ -44,9 +35,9 @@ export default async function Page({ params, searchParams }) {
                 </ul>
               </div>
 
-              <Feed articles={articlesData.articles} />
-
-              <Pagination pathname={pathname} page={page} maxPage={maxPage} />
+              <Suspense fallback={<Loading />}>
+                <Feed page={page} limit={limit} offset={offset} />
+              </Suspense>
             </div>
           </div>
         </div>

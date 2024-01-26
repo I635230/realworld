@@ -60,7 +60,7 @@ export default function ArticleForm({ action, useTags, slug = "" }) {
                 />
                 <div className="tag-list">
                   {tags.map((tag) => (
-                    <span className="tag-default tag-pill">
+                    <span className="tag-default tag-pill" key={tag}>
                       <i
                         id={tag}
                         className="ion-close-round"

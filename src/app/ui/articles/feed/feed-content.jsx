@@ -9,7 +9,9 @@ export default function FeedContent({ article }) {
         <span>Read more...</span>
         <ul className="tag-list">
           {article.tagList.map((tag) => (
-            <li className="tag-default tag-pill tag-outline">{tag}</li>
+            <li className="tag-default tag-pill tag-outline" key={tag}>
+              {tag}
+            </li>
           ))}
         </ul>
       </Link>
