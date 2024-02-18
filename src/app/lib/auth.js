@@ -2,11 +2,13 @@
 
 import { cookies } from "next/headers";
 
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export async function authenticate(state, formData) {
   try {
     const email = formData.get("email");
     const password = formData.get("password");
-    const response = await fetch(`http://api:3000/api/users/login`, {
+    const response = await fetch(`${baseURL}/users/login`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
