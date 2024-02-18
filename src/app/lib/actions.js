@@ -3,9 +3,11 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export async function createArticle(tags, slug, state, formData) {
   try {
-    const response = await fetch(`http://api:3000/api/articles`, {
+    const response = await fetch(`${baseURL}/articles`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${cookies().get("session").value}`,
@@ -31,7 +33,7 @@ export async function createArticle(tags, slug, state, formData) {
 export async function updateArticle(tags, slug, state, formData) {
   console.log(tags, slug, formData);
   try {
-    const response = await fetch(`http://api:3000/api/articles/${slug}`, {
+    const response = await fetch(`${baseURL}/articles/${slug}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${cookies().get("session").value}`,
@@ -56,7 +58,7 @@ export async function updateArticle(tags, slug, state, formData) {
 
 export async function deleteArticle(slug) {
   try {
-    const response = await fetch(`http://api:3000/api/articles/${slug}`, {
+    const response = await fetch(`${baseURL}/articles/${slug}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${cookies().get("session").value}`,
@@ -70,15 +72,12 @@ export async function deleteArticle(slug) {
 
 export async function favorite(slug) {
   try {
-    const response = await fetch(
-      `http://api:3000/api/articles/${slug}/favorite`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${cookies().get("session").value}`,
-        },
-      }
-    );
+    const response = await fetch(`${baseURL}/articles/${slug}/favorite`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${cookies().get("session").value}`,
+      },
+    });
     console.log("お気に入り登録に成功しました");
     return true;
   } catch (error) {
@@ -89,15 +88,12 @@ export async function favorite(slug) {
 
 export async function unfavorite(slug) {
   try {
-    const response = await fetch(
-      `http://api:3000/api/articles/${slug}/favorite`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${cookies().get("session").value}`,
-        },
-      }
-    );
+    const response = await fetch(`${baseURL}/articles/${slug}/favorite`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${cookies().get("session").value}`,
+      },
+    });
     console.log("お気に入り解除に成功しました");
     return true;
   } catch (error) {

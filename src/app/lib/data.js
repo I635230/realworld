@@ -2,9 +2,11 @@
 
 import { cookies } from "next/headers";
 
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export async function fetchArticle({ slug }) {
   try {
-    const response = await fetch(`http://api:3000/api/articles/${slug}`, {
+    const response = await fetch(`${baseURL}/articles/${slug}`, {
       method: "GET",
       cache: "no-store",
     });
@@ -28,13 +30,13 @@ export async function fetchArticles({
   let url;
 
   if (tag) {
-    url = `http://api:3000/api/articles?tag=${tag}&limit=${limit}&offset=${offset}&page=${page}`;
+    url = `${baseURL}/articles?tag=${tag}&limit=${limit}&offset=${offset}&page=${page}`;
   } else if (author) {
-    url = `http://api:3000/api/articles?author=${author}&limit=${limit}&offset=${offset}&page=${page}`;
+    url = `${baseURL}/articles?author=${author}&limit=${limit}&offset=${offset}&page=${page}`;
   } else if (favorited) {
-    url = `http://api:3000/api/articles?favorited=${favorited}&limit=${limit}&offset=${offset}&page=${page}`;
+    url = `${baseURL}/articles?favorited=${favorited}&limit=${limit}&offset=${offset}&page=${page}`;
   } else {
-    url = `http://api:3000/api/articles?limit=${limit}&offset=${offset}&page=${page}`;
+    url = `${baseURL}/articles?limit=${limit}&offset=${offset}&page=${page}`;
   }
 
   let session;
@@ -61,7 +63,7 @@ export async function fetchArticles({
 
 export async function getCurrentUser() {
   try {
-    const response = await fetch(`http://api:3000/api/user`, {
+    const response = await fetch(`${baseURL}/user`, {
       method: "GET",
       cache: "no-store",
       headers: {
